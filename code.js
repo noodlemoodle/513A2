@@ -83,6 +83,7 @@ function maxLineLength(txt) {
 
 // Returns the average word length in text
 function averageWordLength(words) {
+     if(words.length === 0) return 0;
      var allWordsLength = 0;
      for(i = 0; i < words.length; i++) {
           allWordsLength += words[i].length;
