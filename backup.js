@@ -1,24 +1,21 @@
 //
-// SENG513 Assignment 2
-// Qiyue Zhang
-// 10131658
-// Tutorial #6
+// this is just a stub for a function you need to implement
 //
 
-// Checks if a character is a letter
+//if is letter, push letter, if not case number, case punctuation, cases
+
 function isLetter(c) {
      return (c.toUpperCase() != c.toLowerCase());
 }
 
-// Checks if a character is numeric
 function isNumeric(c) {
      return (c >= '0' && c <= '9');
 }
 
-// Returns a list of all strings classified as a word in text
 function getWords(txt) {
      var wordList = [];
      var tempWord = '';
+
      for(i = 0; i < txt.length; i++) {
           if(tempWord.length == 0) {
                if(isLetter(txt[i]) || isNumeric(txt[i])) tempWord += txt[i];
@@ -36,7 +33,6 @@ function getWords(txt) {
      return wordList;
 }
 
-// Returns an array of words with duplicate items removed
 function getUniqueWords(wordList) {
      var uWordList = [];
      for(i = 0; i < wordList.length; i++) {
@@ -45,23 +41,18 @@ function getUniqueWords(wordList) {
      return uWordList;
 }
 
-// Returns the total number of characters in text, including whitespaces
 function nChars(txt) {
      return txt.length;
 }
 
-// Returns the total number of words in text
 function nWords(words) {
      return words.length;
 }
 
-// Returns the total number of lines in text
 function nLines(txt) {
-     if(txt.trim().length === 0 && txt.split("\n").length === 1) return 0;
      return txt.split("\n").length;
 }
 
-// Returns the number of lines containing atleast one visible character
 function nNonEmptyLines(txt) {
      var lines = txt.split("\n");
      var nonEmptyLines = 0;
@@ -71,7 +62,6 @@ function nNonEmptyLines(txt) {
      return nonEmptyLines;
 }
 
-// Returns the length of the longest line
 function maxLineLength(txt) {
      var lines = txt.split("\n");
      var maxLength = 0;
@@ -81,7 +71,6 @@ function maxLineLength(txt) {
      return maxLength;
 }
 
-// Returns the average word length in text
 function averageWordLength(words) {
      var allWordsLength = 0;
      for(i = 0; i < words.length; i++) {
@@ -90,14 +79,12 @@ function averageWordLength(words) {
      return allWordsLength/words.length;
 }
 
-// Check if a string is a palindrome
 function isPalindrome(s) {
      s = s.toLowerCase();
      return s == s.split("").reverse().join("");
 
 }
 
-// Returns a list of all palindromes in text
 function palindromes(words) {
      var palList = [];
      for(i = 0; i < words.length; i++) {
@@ -108,7 +95,6 @@ function palindromes(words) {
      return palList;
 }
 
-// Returns the top ten longest words in text, sorted by length, then alphabetically/numerically
 function longestWords(words) {
      var uWords = getUniqueWords(words);
      var topTen = [];
@@ -122,63 +108,65 @@ function longestWords(words) {
           uWords.splice(uWords.indexOf(longest), 1);
      }
      var buffer = [];
-     var lastLen = 99;
      for(i = 0; i < longestWords.length && topTen.length < 10; i++) {
-          if(longestWords[i].length < lastLen) {
-               buffer.sort();
-               for(j = 0; topTen.length < 10 && j < buffer.length; j++) {
-                    topTen.push(buffer[j]);
+               if(longestWords[i].length > longestWords[i+1].length) {
+                     buffer.push(longestWords[i]);
+                    buffer.sort();
+                    var j = 0;
+                    while(topTen.length < 10 && j < buffer.length) {
+                         topTen.push(buffer[j]);
+                         j++;
+                    }
+                    buffer.splice(0, buffer.length);
+               } else {
+                    buffer.push(longestWords[i]);
                }
-               buffer.splice(0, buffer.length);
-               buffer.push(longestWords[i]);
-               lastLen = longestWords[i].length;
-          } else {
-               buffer.push(longestWords[i]);
-          }
-     }
-     for(j = 0; topTen.length < 10 && j < buffer.length; j++) {
-          topTen.push(buffer[j]);
      }
      return topTen;
 }
 
-// Returns the top ten frequently occuring words in text, sorted by frequency, then alphabetically/numerically
 function mostFrequentWords(words) {
      var uWords = getUniqueWords(words);
-     uWords.sort();
-     var mostFreq = [];
+     var topTen = [];
+     var frequencySorted = [];
      var frequencies = [];
      for(i = 0; i < uWords.length; i++) {
-          var wordFreq = 0;
-          for(j = 0; j < words.length; j++) {
-               if(uWords[i] === words[j]) {
-                    wordFreq++;
-               }
+          var freq = 0;
+          for(i = 0; i < words.length) {
+               if(words[i] == uwords[i]) frequencies++;
           }
-          if(wordFreq > 0){
-               frequencies.push(wordFreq);
-          }
+          frequencies.push(freq);
      }
-     while(mostFreq.length < 10 && mostFreq.length < frequencies.length) {
-          var highestFreq = -1;
-          var freqIndex = -1;
-          for(j = 0; j < frequencies.length; j++) {
-               if(frequencies[j] > highestFreq) {
-                    highestFreq = frequencies[j];
-                    freqIndex = j;
-               }
-          }
-          mostFreq.push(uWords[freqIndex]+"("+highestFreq+")");
-          frequencies[freqIndex] = -1;
-          freqIndex = -1;
-          highestFreq = -1;
+     var buffer = [];
+     for(i = 0; i < frequencies.length; i++) {
+
      }
-     return mostFreq;
+     return 0;
 }
+// function getWordFrequency(wordList, word) {
+//      var frequency = 0;
+//      for(i = 0; i < wordList.length; i++) {
+//           if(wordList[i] == word) frequency ++;
+//      }
+//      return frequency;
+// }
+//
+// // TODO: Will contain the 10 most frequent words in the text, concatenated with their respective frequencies
+// function mostFrequentWords(txt) {
+//      var freqWords = [];
+//      var words = getWords(txt);
+//      for(i = 0; i < words.length; i++) {
+//           freqWords.push(getWordFrequency(words,words[i]));
+//      }
+//      return freqWords;
+// }
 
 function getStats(txt) {
      var words = getWords(txt);
      return {
+          // TODO: remove allWords
+          //uWords: getUniqueWords(words),
+          allWords: words,
           nChars: nChars(txt),
           nWords: nWords(words),
           nLines: nLines(txt),
@@ -187,7 +175,6 @@ function getStats(txt) {
           averageWordLength: averageWordLength(words),
           palindromes: palindromes(words),
           longestWords: longestWords(words),
-          mostFrequentWords: mostFrequentWords(words)
+     //     mostFrequentWords: mostFrequentWords(words)
     };
-
 }
